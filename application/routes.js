@@ -5,55 +5,77 @@ import Movements from './Views/Movements.vue';
 import Login from './Views/Login.vue';
 import Schedules from './Views/Schedules.vue';
 
+import App from './Layouts/App.vue';
+import LoginTPL from './Layouts/Login.vue';
+
 const routes = [
+    /**
+     * APP Template
+     */
     {
         path: '/',
-        name: 'home',
-        component: Home,
-        meta: {
-            title: 'Heliquality - Home'
-        }
+        component: App,
+        children: [
+            {
+                path: '/',
+                name: 'home',
+                component: Home,
+                meta: {
+                    title: 'Heliquality - Home'
+                }
+            },
+            {
+                path: '/account',
+                name: 'account',
+                component: Account,
+                meta: {
+                    title: 'Heliquality - minha conta'
+                }
+            },
+            {
+                path: '/pilots',
+                name: 'pilots',
+                component: Pilots,
+                meta: {
+                    title: 'Heliquality - pilotos'
+                }
+            },
+            {
+                path: '/movements',
+                name: 'movements',
+                component: Movements,
+                meta: {
+                    title: 'Heliquality - movimentos'
+                }
+            },
+            {
+                path: '/schedules',
+                name: 'schedules',
+                component: Schedules,
+                meta: {
+                    title: 'Heliquality - agendamentos'
+                }
+            }
+        ],
     },
+
+    /**
+     * Auth Template
+     */
     {
-        path: '/account',
-        name: 'account',
-        component: Account,
-        meta: {
-            title: 'Heliquality - minha conta'
-        }
+        path: '/',
+        component: LoginTPL,
+        children: [
+            {
+                path: '/login',
+                name: 'login',
+                component: Login,
+                meta: {
+                    title: 'Heliquality - login'
+                }
+            },
+        ],
     },
-    {
-        path: '/pilots',
-        name: 'pilots',
-        component: Pilots,
-        meta: {
-            title: 'Heliquality - pilotos'
-        }
-    },
-    {
-        path: '/movements',
-        name: 'movements',
-        component: Movements,
-        meta: {
-            title: 'Heliquality - movimentos'
-        }
-    },
-    {
-        path: '/login',
-        name: 'login',
-        component: Login,
-        meta: {
-            title: 'Heliquality - login'
-        }
-    },
-    {
-        path: '/schedules',
-        name: 'schedules',
-        component: Schedules,
-        meta: {
-            title: 'Heliquality - agendamentos'
-        }
-    }
 ]
 
 export default routes

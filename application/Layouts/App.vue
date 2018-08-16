@@ -18,8 +18,8 @@
 </template>
 
 <script>
-    import UserOptions from './UserOptions.vue';
-    import SideBar from './SideBar.vue';
+    import UserOptions from '../Components/UserOptions.vue';
+    import SideBar from '../Components/SideBar.vue';
 
     export default {
         name: "App",
