@@ -9,32 +9,50 @@ const routes = [
     {
         path: '/',
         name: 'home',
-        component: Home
+        component: Home,
+        meta: {
+            title: 'Heliquality - Home'
+        }
     },
     {
         path: '/account',
         name: 'account',
-        component: Account
+        component: Account,
+        meta: {
+            title: 'Heliquality - minha conta'
+        }
     },
     {
         path: '/pilots',
         name: 'pilots',
-        component: Pilots
+        component: Pilots,
+        meta: {
+            title: 'Heliquality - pilotos'
+        }
     },
     {
         path: '/movements',
         name: 'movements',
-        component: Movements
+        component: Movements,
+        meta: {
+            title: 'Heliquality - movimentos'
+        }
     },
     {
         path: '/login',
         name: 'login',
-        component: Login
+        component: Login,
+        meta: {
+            title: 'Heliquality - login'
+        }
     },
     {
         path: '/schedules',
         name: 'schedules',
-        component: Schedules
+        component: Schedules,
+        meta: {
+            title: 'Heliquality - agendamentos'
+        }
     }
 ]
 

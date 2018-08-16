@@ -10,7 +10,7 @@
                     <user-options/>
                 </div>
             </div>
-            <div class="container" id="content-container" style="border:1px solid green;">
+            <div class="container" id="content-container">
                 <router-view></router-view>
             </div>
         </div>

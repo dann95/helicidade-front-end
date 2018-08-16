@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Lato');
+
 html {
     height:100%;
 }
@@ -6,9 +8,24 @@ body {
     margin:0;
     height: 100%;
     background-color:#c6c6c6;
+    font-family: 'Lato', sans-serif;
 }
 
 @media (min-width: 992px) {
+
+    #logo-left-nav {
+        padding-left:52px;
+        padding-top:30px;
+    }
+
+    #logo-right-nav {
+        display:none !important;
+    }
+
+    #top-content-bar {
+        position:fixed;
+    }
+
     #content-container {
         margin-top:114px;
     }
@@ -35,6 +52,7 @@ body {
         width: calc(100% - 245px);
         vertical-align: top;
         padding:0;
+        overflow-y: auto;
     }
 
     #side-bar > #side-bar-list li {
@@ -58,6 +76,7 @@ body {
     #side-bar > #side-bar-list > li > a > img.side-bar-icon {
         margin-left:51px;
         margin-right:16px;
+        vertical-align: middle;
     }
 
     #side-bar-list > li:first-child {
@@ -112,8 +131,6 @@ body {
     }
 }
 
-
-
 #side-bar-logo-place {
     width: 100%;
     display: block;
@@ -152,13 +169,13 @@ body {
 }
 
 #top-content-bar-left {
-    width:30%;
+    width:calc(calc(100% - 245px) * 0.3);
     float:left;
     height:100%;
 }
 
 #top-content-bar-right {
-    width:70%;
+    width:calc(calc(100% - 245px) * 0.7);
     float:left;
     height:100%;
 }
