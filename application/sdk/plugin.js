@@ -1,13 +1,15 @@
 import SDK from './sdk';
 
-const instance = new SDK()
 
-export default {
-    install(__Vue, options) {
-        Object.defineProperty(__Vue.prototype, '$sdk', {
-            get() {
-                return instance
-            }
-        })
+export default function (httpClient) {
+    const instance = new SDK(httpClient)
+    return {
+        install(__Vue, options) {
+            Object.defineProperty(__Vue.prototype, '$sdk', {
+                get() {
+                    return instance
+                }
+            })
+        }
     }
 }

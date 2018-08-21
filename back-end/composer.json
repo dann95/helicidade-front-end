@@ -1,0 +1,17 @@
+{
+    "name": "dann95/back-end",
+    "authors": [
+        {
+            "name": "Daniel Rubin",
+            "email": "danielrubin95@hotmail.com"
+        }
+    ],
+    "require": {
+        "slim/slim": "^3.10",
+        "illuminate/events": "^5.6",
+        "illuminate/database": "^5.6",
+        "illuminate/container": "^5.6",
+        "firebase/php-jwt": "^5.0",
+        "tuupola/slim-jwt-auth": "^3.1"
+    }
+}

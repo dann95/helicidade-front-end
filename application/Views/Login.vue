@@ -15,7 +15,7 @@
                 <small class="form-element-hint fr" id="login-forget-pswd"><a href="#">Esqueci minha senha</a></small>
                 <i class="form-input-icon fa fa-unlock-alt"></i>
             </div>
-            <button id="login-button">
+            <button id="login-button" @click="authenticate()">
                 entrar
             </button>
         </div>
@@ -24,7 +24,24 @@
 
 <script>
     export default {
-        name: "Login"
+        name: "Login",
+        methods: {
+            authenticate() {
+
+                this.$auth.login({
+                    params: {
+                        email: '',
+                        password: ''
+                    },
+                    success: function () {},
+                    error: function () {},
+                    rememberMe: true,
+                    redirect: '/',
+                    fetchUser: true,
+                });
+
+            }
+        }
     }
 </script>
 

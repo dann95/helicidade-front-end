@@ -21,6 +21,7 @@ const routes = [
                 name: 'home',
                 component: Home,
                 meta: {
+                    auth: true,
                     title: 'Heliquality - Home'
                 }
             },
