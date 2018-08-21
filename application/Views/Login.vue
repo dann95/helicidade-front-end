@@ -3,15 +3,15 @@
         <img src="/dist/img/logo.svg" alt="HeliQuality Logo" width="338" height="97" style="margin:0 auto; display: block;">
         <div id="login-box-inputs">
             <div class="form-element form-input form-input-with-icon">
-                <input id="login-email-input" class="form-element-field" placeholder="Please fill in your full name" type="input" required/>
+                <input id="login-email-input" class="form-element-field" placeholder="Insira seu E-mail" type="input" required/>
                 <div class="form-element-bar"></div>
                 <label class="form-element-label" for="login-email-input">E-mail</label>
                 <i class="form-input-icon fa fa-user"></i>
             </div>
             <div class="form-element form-input form-input-with-icon">
-                <input id="field-omv6eo-metm0n-5j55wv-w3wbws-6nm2b9" class="form-element-field" placeholder="Please fill in your full name" type="input" required/>
+                <input id="login-password-input" class="form-element-field" placeholder="Insira sua senha" type="password" required/>
                 <div class="form-element-bar"></div>
-                <label class="form-element-label" for="field-omv6eo-metm0n-5j55wv-w3wbws-6nm2b9">Senha</label>
+                <label class="form-element-label" for="login-password-input">Senha</label>
                 <small class="form-element-hint fr" id="login-forget-pswd"><a href="#">Esqueci minha senha</a></small>
                 <i class="form-input-icon fa fa-unlock-alt"></i>
             </div>
@@ -74,21 +74,5 @@
     #login-forget-pswd > a {
         text-decoration: none;
         color: rgba(185, 150, 2, 0.7) !important;
-    }
-
-    .form-element.form-input-with-icon > .form-element-label  {
-        padding-left: 2.5rem !important;
-    }
-
-    .form-element.form-input-with-icon > .form-element-field {
-        padding-left: 2.5rem !important;
-    }
-
-    .form-input-icon {
-        font-size:1.7em;
-        position:absolute;
-        top:-8px;
-        left:0;
-        color:#efc203;
     }
 </style>

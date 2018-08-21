@@ -518,3 +518,19 @@ select.form-element-field {
     -webkit-appearance: none;
     margin: 0;
 }
+
+.form-element.form-input-with-icon > .form-element-label  {
+    padding-left: 2.5rem !important;
+}
+
+.form-element.form-input-with-icon > .form-element-field {
+    padding-left: 2.5rem !important;
+}
+
+.form-input-icon {
+    font-size:1.7em;
+    position:absolute;
+    top:-8px;
+    left:0;
+    color:#efc203;
+}
