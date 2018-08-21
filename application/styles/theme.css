@@ -24,6 +24,7 @@ body {
 
     #top-content-bar {
         position:fixed;
+        z-index:99;
     }
 
     #content-container {

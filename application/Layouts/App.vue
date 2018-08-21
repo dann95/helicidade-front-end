@@ -4,7 +4,7 @@
         <div id="content">
             <div id="top-content-bar">
                 <div id="top-content-bar-left">
-                    form de search
+                    <search-input />
                 </div>
                 <div id="top-content-bar-right">
                     <user-options/>
@@ -20,12 +20,14 @@
 <script>
     import UserOptions from '../Components/UserOptions.vue';
     import SideBar from '../Components/SideBar.vue';
+    import SearchInput from '../Components/SearchInput.vue';
 
     export default {
         name: "App",
         components: {
             UserOptions,
-            SideBar
+            SideBar,
+            SearchInput
         }
     }
 </script>

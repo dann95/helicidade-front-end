@@ -13,6 +13,10 @@
 <style scoped>
     #login-container {
 
+        overflow-y: auto;
+
+        padding-top:50px;
+
         height: 100vh;
         width: 100vw;
 

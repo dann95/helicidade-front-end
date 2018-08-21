@@ -5,6 +5,7 @@ const resources = {
      * Vendor javascript (like bootstrap,jquery,etc,etc)
      */
     vendorJS: [
+        'application/scripts/vendor/md-inputs-fix.js',
         'node_modules/jquery/dist/jquery.slim.js',
         'node_modules/moment/moment.js'
     ],
@@ -18,6 +19,7 @@ const resources = {
         'application/styles/theme.css',
         'application/styles/calendars.css',
         'application/styles/inputs.css',
+        'application/styles/md-inputs.css',
         'application/styles/modals.css',
         'application/styles/tables.css',
         'application/styles/main.css',
