@@ -12,6 +12,17 @@
         "illuminate/database": "^5.6",
         "illuminate/container": "^5.6",
         "firebase/php-jwt": "^5.0",
-        "tuupola/slim-jwt-auth": "^3.1"
+        "tuupola/slim-jwt-auth": "^3.1",
+        "tuupola/cors-middleware": "^0.9.0",
+        "vlucas/phpdotenv": "^2.5",
+        "respect/validation": "^1.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Heliquality\\": "app/"
+        },
+        "files": [
+            "helpers/common.php"
+        ]
     }
 }

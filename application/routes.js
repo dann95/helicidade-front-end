@@ -30,6 +30,7 @@ const routes = [
                 name: 'account',
                 component: Account,
                 meta: {
+                    auth: true,
                     title: 'Heliquality - minha conta'
                 }
             },
@@ -38,6 +39,7 @@ const routes = [
                 name: 'pilots',
                 component: Pilots,
                 meta: {
+                    auth: true,
                     title: 'Heliquality - pilotos'
                 }
             },
@@ -46,6 +48,7 @@ const routes = [
                 name: 'movements',
                 component: Movements,
                 meta: {
+                    auth: true,
                     title: 'Heliquality - movimentos'
                 }
             },
@@ -54,6 +57,7 @@ const routes = [
                 name: 'schedules',
                 component: Schedules,
                 meta: {
+                    auth: true,
                     title: 'Heliquality - agendamentos'
                 }
             }

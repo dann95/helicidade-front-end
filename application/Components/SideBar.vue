@@ -37,7 +37,7 @@
                 </router-link>
             </li>
             <li class="side-bar-item">
-                <a href="#">
+                <a href="#" @click="$auth.logout({redirect: '/login'})">
                     <img class="side-bar-icon" src="/dist/img/logout.svg" height="23" width="23" alt="">Sair
                 </a>
             </li>

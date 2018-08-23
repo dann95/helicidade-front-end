@@ -4,92 +4,95 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use Firebase\JWT\JWT;
 
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
-header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token');
-header('Content-Type: application/json');
-
+use Respect\Validation\Validator as v;
 
 $routes = function (\Slim\App $router) {
 
-//    $router->add(function ($req, $res, $next) {
-//        $response = $next($req, $res);
-//        return $response
-//            ->withHeader('Access-Control-Allow-Origin', '*')
-//            ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
-//            ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
-//    });
-
-    $router->options('/{routes:.+}', function ($request, $response, $args) {
+    $router->get('/', function (Request $request, Response $response) {
+        $response->getBody()->write(json_encode([
+            'hello' => 'world'
+        ]));
         return $response;
     });
 
-
     $router->group('/v1', function () use($router){
-        $router->get('/auth', function (Request $request, Response $response) {
+        $router->post('/auth/login', function (Request $request, Response $response, $args) {
 
-            $key = "thisisspartaorthisismyrealm95";
+            $parsedBody = $request->getParsedBody();
+
+            $emailValidation = v::email()->validate(arr_opt($parsedBody, 'email'));
+            $passwordValidation = v::stringType()->length(6)->validate(arr_opt($parsedBody, 'password'));
 
 
-            $token = array(
-                "user" => "@fidelissauro",
-                "twitter" => "https://twitter.com/fidelissauro",
-                "github" => "https://github.com/msfidelis"
-            );
+            if($emailValidation && $passwordValidation) {
 
-            $jwt = JWT::encode($token, $key);
+                $repository = new \Heliquality\Repositories\UsersRepository();
+                $q = $repository->findByEmailAndPassword($parsedBody['email'], $parsedBody['password']);
+
+                if($q) {
+                    $n = time();
+
+                    $session = \Heliquality\Models\Session::create([
+                        'sess_id' => str_random(20),
+                        'user_id' => $q->id,
+                    ]);
+
+                    $token = JWT::encode([
+                        'sub' => 'web',
+                        'exp' => $n + 3600,
+                        'iat' => $n,
+                        'nbf' => $n,
+                        'jti' => $session->sess_id
+                    ], getenv('JWT_SECRET'));
+
+                    $response->getBody()->write(json_encode([
+                        'status' => 'success',
+                        'token' => $token
+                    ]));
+
+                    $response = $response->withHeader("Authorization", $token);
+
+                    return $response;
+                }
+
+            }
+
+            $response = $response->withStatus(422);
 
             $response->getBody()->write(json_encode([
-                'status' => 'success'
+                'success' => false,
+                'error_msg' => 'Usuário ou senha incorretos!'
             ]));
-
-            $response = $response->withHeader('Authorization', $jwt);
 
             return $response;
         });
+
+        $router->get('/auth/user', function (Request $request, Response $response) {
+
+            $token = JWT::decode($request->getHeader('Authorization')[0], getenv('JWT_SECRET'), ['HS256']);
+
+
+            $sess = \Heliquality\Models\Session::where('sess_id', $token->jti)->where('valid', 1)->with('user')->get()->first();
+
+            if($sess) {
+                $response->getBody()->write(json_encode([
+                    'status' => 'success',
+                    'data' => $sess->user
+                ]));
+            }
+
+            return $response;
+        });
+
+        $router->get('/auth/refresh', function (Request $request, Response $response) {
+            $response->getBody()->write(json_encode(["u" => 'a']));
+            return $response;
+        });
+
     });
 
+
+    return $router;
 };
 
 return $routes;
-
-
-/*
-    public function login(Request $request)
-    {
-        $credentials = $request->only('email', 'password');
-        if ( ! $token = JWTAuth::attempt($credentials)) {
-            return response([
-                'status' => 'error',
-                'error' => 'invalid.credentials',
-                'msg' => 'Invalid Credentials.'
-            ], 400);
-        }
-        return response([
-            'status' => 'success'
-        ])
-            ->header('Authorization', $token);
-    }
-    public function user(Request $request)
-    {
-        $user = User::find(Auth::user()->id);
-        return response([
-            'status' => 'success',
-            'data' => $user
-        ]);
-    }
-    public function refresh()
-    {
-        return response([
-            'status' => 'success'
-        ]);
-    }
-    public function logout()
-    {
-        JWTAuth::invalidate();
-        return response([
-            'status' => 'success',
-            'msg' => 'Logged out Successfully.'
-        ], 200);
-    }
-*/

@@ -3,13 +3,13 @@
         <img src="/dist/img/logo.svg" alt="HeliQuality Logo" width="338" height="97" style="margin:0 auto; display: block;">
         <div id="login-box-inputs">
             <div class="form-element form-input form-input-with-icon">
-                <input id="login-email-input" class="form-element-field" placeholder="Insira seu E-mail" type="input" required/>
+                <input v-model="mail" id="login-email-input" class="form-element-field" placeholder="Insira seu E-mail" type="input" required/>
                 <div class="form-element-bar"></div>
                 <label class="form-element-label" for="login-email-input">E-mail</label>
                 <i class="form-input-icon fa fa-user"></i>
             </div>
             <div class="form-element form-input form-input-with-icon">
-                <input id="login-password-input" class="form-element-field" placeholder="Insira sua senha" type="password" required/>
+                <input v-model="pswd" id="login-password-input" class="form-element-field" placeholder="Insira sua senha" type="password" required/>
                 <div class="form-element-bar"></div>
                 <label class="form-element-label" for="login-password-input">Senha</label>
                 <small class="form-element-hint fr" id="login-forget-pswd"><a href="#">Esqueci minha senha</a></small>
@@ -25,21 +25,29 @@
 <script>
     export default {
         name: "Login",
+        data() {
+            return {
+                mail: '',
+                pswd: ''
+            }
+        },
         methods: {
             authenticate() {
-
                 this.$auth.login({
-                    params: {
-                        email: '',
-                        password: ''
+                    data: {
+                        email: this.mail,
+                        password: this.pswd
                     },
-                    success: function () {},
-                    error: function () {},
+                    success: () => {
+
+                    },
+                    error: (e) => {
+                        alert("E-mail ou senha errados, fazer animação de erro.")
+                    },
                     rememberMe: true,
                     redirect: '/',
                     fetchUser: true,
                 });
-
             }
         }
     }

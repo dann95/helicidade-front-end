@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const buildDIR = 'public/dist'
 
 const resources = {
@@ -40,12 +42,14 @@ const   path = require('path'),
     concat = require('gulp-concat'),
     cleanCSS = require('gulp-clean-css'),
     uglify  = require('gulp-uglify'),
-    copy = require('gulp-copy')
-    webpack = require('webpack-stream')
+    copy = require('gulp-copy'),
+    replace = require('gulp-replace'),
+    webpack = require('webpack-stream'),
     webpackSettings = require('./application/ENV/webpack/webpack.config.dev');
 
 gulp.task('SPA', () => {
     gulp.src(resources.entry)
+        .pipe(replace(/#_api_#/g, process.env['HLQ_API']))
         .pipe(webpack(webpackSettings))
         .pipe(
             gulp.dest(

@@ -1,7 +1,7 @@
 <template>
     <ul id="user-options">
         <li>
-            João da Silva
+            {{ _name }}
         </li>
         <li>
             item2
@@ -17,7 +17,15 @@
 
 <script>
     export default {
-        name: "UserOptions"
+        name: "UserOptions",
+        computed: {
+            _name() {
+                return this._user.nome || 'Nome do Usuário'
+            },
+            _user() {
+                return this.$auth.user()
+            }
+        }
     }
 </script>
 

@@ -53,6 +53,10 @@
 
     export default {
         name: "Schedules",
+        beforeRouteEnter (to, from, next) {
+            // next(vm => vm.incrementMonth())
+            next()
+        },
         data() {
             return {
                 eb: 0,

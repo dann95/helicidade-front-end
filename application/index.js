@@ -8,9 +8,7 @@ import SDK from './sdk/plugin';
 import meta from './metainfo';
 
 
-axios.defaults.baseURL = 'http://localhost:9999/v1'
-
-
+axios.defaults.baseURL = '#_api_#'
 
 
 
@@ -34,7 +32,7 @@ meta(router)
 Vue.router = router
 
 Vue.use(require('@websanova/vue-auth'), {
-    auth: require('@websanova/vue-auth/drivers/auth/bearer.js'),
+    auth: require('./auth-token'),
     http: require('@websanova/vue-auth/drivers/http/axios.1.x.js'),
     router: require('@websanova/vue-auth/drivers/router/vue-router.2.x.js'),
 })
