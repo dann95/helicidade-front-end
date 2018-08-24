@@ -4,18 +4,42 @@
             <div class="home-white-box">
                 <h2>Histórico de POUSOS</h2>
                 <h3>Histórico dos voos ocorridos durante o período.</h3>
-                <ul>
-                    <li>Pousos Totais</li>
+                <ul class="home-white-box-switch">
+                    <li class="active">Pousos Totais</li>
                 </ul>
                 <div>
                     <span style="float:left;">
-                        <div class="home-search-input-container">
-                            <input type="text" placeholder="search input...">
-                            <ul class="home-search-input-autocomplete">
-                                <li>BZ1409</li>
-                            </ul>
-                            <i class="fa fa-search"></i>
+                        <div style="width:184px;">
+                            <div class="home-search-input-container">
+                                <input type="text" placeholder="search input...">
+                                <ul class="home-search-input-autocomplete">
+                                    <li data-option-value="1">BZ1409</li>
+                                    <li data-option-value="2">BZ1408</li>
+                                </ul>
+                                <i class="fa fa-search"></i>
+                            </div>
                         </div>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
                         <button>confirmar</button>
                     </span>
                     <span style="float:right;">
@@ -44,8 +68,8 @@
             <div class="home-white-box">
                 <h2>Indicadores</h2>
                 <h3>Histórico de alertas emitidos durante o período</h3>
-                <ul>
-                    <li>Hoje</li>
+                <ul class="home-white-box-switch">
+                    <li class="active">Hoje</li>
                     <li>Semana</li>
                     <li>Mês</li>
                 </ul>
@@ -140,33 +164,101 @@
         border: solid 1px #dadada;
         padding:31px;
     }
+
+    .home-white-box > h2 {
+        font-family: Lato;
+        font-size: 23.5px;
+        font-weight: 600;
+        /*font-style: normal;*/
+        /*font-stretch: normal;*/
+        /*line-height: 1.79;*/
+        /*letter-spacing: 0.5px;*/
+        text-align: left;
+        color: #1a1a1a;
+        margin-bottom:5px;
+    }
+
+    .home-white-box > h3 {
+        font-size: 17.5px;
+        font-weight: 300;
+        /*font-style: normal;*/
+        /*font-stretch: normal;*/
+        /*line-height: 4.14;*/
+        /*letter-spacing: 0.2px;*/
+        text-align: left;
+        color: #1a1a1a;
+        margin-top:5px;
+        margin-bottom:5px;
+    }
+
+    .home-white-box-switch {
+        list-style-type: none;
+        margin:0;
+        margin-bottom:50px;
+        padding:0;
+        width:100%;
+        display:block;
+        float:left;
+    }
+
+    .home-white-box-switch > li {
+        margin:0;
+        padding:0;
+        display:block;
+        float:left;
+    }
+
+    .home-white-box-switch > li.active {
+        border-bottom: 3px solid #efc203;
+    }
+
+
+    .home-white-box-switch > li+li {
+        margin-left:70px !important;
+    }
+
     .home-white-box + .home-white-box {
         margin-top:23px;
     }
 
     .home-search-input-container {
         position:relative;
+        display: block;
+    }
+
+    .home-search-input-container > input[type="text"] {
+        width:100%;
+        height:32px;
+        padding-left:24px;
     }
 
     .home-search-input-container > .fa-search {
         position:absolute;
-        top:0;
-        left:0;
+        top:8px;
+        left:4px;
     }
 
     .home-search-input-container > .home-search-input-autocomplete {
         position:absolute;
-        top:0;
+        top:32px;
         left:0;
         padding:0;
         margin:0;
         list-style-type: none;
+        width:100%;
     }
 
     .home-search-input-container > .home-search-input-autocomplete > li {
         padding:0;
+        padding-left:24px;
         margin:0;
         display:block;
+        border: solid 1px #cbcbcb;
+        width:100%;
+        line-height: 33px;
+        color: #2c303b;
+        font-weight: 600;
+        font-size: 14px;
     }
 
 </style>
