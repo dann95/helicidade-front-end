@@ -4,14 +4,14 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
 $middleware = function (\Slim\App $app) {
-
     $app->add(new \Tuupola\Middleware\JwtAuthentication([
         "regexp" => "/(.*)/",
         "header" => "Authorization",
         "path" => "/v1",
         "ignore" => ["/v1/auth/login"],
         "realm" => "Protected",
-        "secret" => getenv("JWT_SECRET")
+        "secret" => getenv("JWT_SECRET"),
+        "relaxed" => safe_http_domains()
     ]));
 
     $app->add(new Tuupola\Middleware\CorsMiddleware([
@@ -22,7 +22,6 @@ $middleware = function (\Slim\App $app) {
         "credentials" => false,
         "cache" => 0,
     ]));
-
 
     $app->add(function (Request $request, Response $response, $next) {
         $response = $response->withHeader('Content-Type', 'application/json');

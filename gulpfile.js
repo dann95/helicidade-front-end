@@ -9,7 +9,8 @@ const resources = {
     vendorJS: [
         'application/scripts/vendor/md-inputs-fix.js',
         'node_modules/jquery/dist/jquery.slim.js',
-        'node_modules/moment/moment.js'
+        'node_modules/moment/moment.js',
+        'node_modules/echarts/dist/echarts.js'
     ],
     /**
      * CSS (vendor and styles)
@@ -43,14 +44,14 @@ const   path = require('path'),
     cleanCSS = require('gulp-clean-css'),
     uglify  = require('gulp-uglify'),
     copy = require('gulp-copy'),
-    replace = require('gulp-replace'),
+    replace = require('gulp-string-replace'),
     webpack = require('webpack-stream'),
     webpackSettings = require('./application/ENV/webpack/webpack.config.dev');
 
 gulp.task('SPA', () => {
     gulp.src(resources.entry)
-        .pipe(replace(/#_api_#/g, process.env['HLQ_API']))
         .pipe(webpack(webpackSettings))
+        .pipe(replace(/#_api_#/g, process.env['HLQ_API']))
         .pipe(
             gulp.dest(
                 path.join(__dirname, buildDIR, 'js')

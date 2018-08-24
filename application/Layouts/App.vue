@@ -18,6 +18,7 @@
 </template>
 
 <script>
+
     import UserOptions from '../Components/UserOptions.vue';
     import SideBar from '../Components/SideBar.vue';
     import SearchInput from '../Components/SearchInput.vue';
@@ -28,6 +29,9 @@
             UserOptions,
             SideBar,
             SearchInput
+        },
+        mounted() {
+
         }
     }
 </script>

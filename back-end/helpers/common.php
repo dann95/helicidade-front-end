@@ -19,3 +19,12 @@ if(! function_exists('arr_opt')) {
         return $default;
     }
 }
+
+if(! function_exists('safe_http_domains')) {
+    function safe_http_domains()
+    {
+        return array_filter(explode(",", getenv("HLQ_SAFE_HTTP")), function ($item) {
+            return $item != "";
+        });
+    }
+}
