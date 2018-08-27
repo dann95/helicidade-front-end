@@ -1,5 +1,5 @@
-import example from './handlers/example';
-import auth from './handlers/auth';
+import landings from './handlers/landings';
+import fueling from './handlers/fueling';
 
 export default class SDK {
 
@@ -7,12 +7,20 @@ export default class SDK {
         this.http = http
     }
 
-    get auth() {
-        return auth(this.http)
+    get airplane() {
+
     }
 
-    get example() {
-        return example(this.http)
+    get landings() {
+        return landings(this.http)
+    }
+
+    get fueling() {
+        return fueling(this.http)
+    }
+
+    get movements() {
+
     }
 
 }

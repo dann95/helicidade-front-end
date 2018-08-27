@@ -190,3 +190,11 @@ body {
     list-style-type: none;
     float:right;
 }
+
+.fueling-color-jet1 {
+    color: #000 !important;
+}
+
+.fueling-color-avgas {
+    color: #ae2218 !important;
+}

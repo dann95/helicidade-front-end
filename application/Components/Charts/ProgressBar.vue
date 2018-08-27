@@ -34,6 +34,7 @@
         -webkit-border-radius: 25px;
         border-radius: 25px;
         box-shadow: inset 0 -1px 1px rgba(255,255,255,0.3);
+        margin:10px 0 10px 0;
     }
 
     .hlqpbm > span {

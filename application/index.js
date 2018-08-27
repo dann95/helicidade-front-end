@@ -46,10 +46,10 @@ meta(router)
 Vue.router = router
 
 Vue.use(require('@websanova/vue-auth'), {
+    refreshData: { enabled: false, interval: 0},
     auth: require('./auth-token'),
     http: require('@websanova/vue-auth/drivers/http/axios.1.x.js'),
     router: require('@websanova/vue-auth/drivers/router/vue-router.2.x.js'),
-    refreshData: { enabled: false}
 })
 
 /**

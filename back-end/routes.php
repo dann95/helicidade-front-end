@@ -15,7 +15,7 @@ $routes = function (\Slim\App $router) {
         return $response;
     });
 
-    $router->group('/v1', function () use($router){
+    $router->group('/v1', function () use($router) {
         $router->post('/auth/login', function (Request $request, Response $response, $args) {
 
             $parsedBody = $request->getParsedBody();
@@ -87,6 +87,35 @@ $routes = function (\Slim\App $router) {
         $router->get('/auth/refresh', function (Request $request, Response $response) {
             $response->getBody()->write(json_encode(["u" => 'a']));
             return $response;
+        });
+
+
+        $router->group('/landings', function () use ($router) {
+
+            $router->post('/findByPeriod', function (Request $request, Response $response) {
+
+                $body = $request->getParsedBody();
+
+                $repository = new \Heliquality\Repositories\LandingsRepository();
+
+                $data = $repository->findByPeriod($body['start'], $body['end']);
+
+                $response->getBody()->write(json_encode($data));
+
+                return $response;
+            });
+
+        });
+
+        $router->group('/fueling', function () use($router) {
+            $router->get('/last/{amount}', function (Request $request, Response $response, $args) {
+
+                $repository = new \Heliquality\Repositories\FuelingRepository();
+
+                $response->getBody()->write(json_encode($repository->last($args['amount'])));
+
+                return $response;
+            });
         });
 
     });

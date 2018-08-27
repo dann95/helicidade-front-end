@@ -5,7 +5,7 @@
 <script>
     export default {
         name: "SingleLineChart",
-        props: ["channel", "color", "xAxis"],
+        props: ["values", "color", "xAxis"],
         data() {
             return {
                 DOM: null,
@@ -21,7 +21,13 @@
                     series: [{
                         data: [],
                         type: 'line',
-                    }]
+                    }],
+                    tooltip: {
+                        show: true,
+                        formatter: function (e) {
+                            return `${e.dataIndex} hrs<br> ${e.data}`
+                        }
+                    }
                 }
             }
         },
@@ -30,11 +36,8 @@
             self.DOM = echarts.init(document.getElementById(this._id))
             self.option.xAxis.data = self.xAxis || []
             self.option.series[0].color = self.color || '#efc203'
+            self.option.series[0].data = self.values || []
             self.DOM.setOption(this.option)
-            self.$bus.on(this.channel || self._id, (payload) => {
-                self.opacity.series[0].data = payload
-                self.refresh()
-            })
         },
         computed: {
             _id() {
@@ -53,6 +56,10 @@
             },
             xAxis(_new) {
                 this.option.xAxis.data = _new
+                this.refresh()
+            },
+            values(_new) {
+                this.option.series[0].data = _new
                 this.refresh()
             }
         }

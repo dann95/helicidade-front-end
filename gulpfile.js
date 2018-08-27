@@ -26,7 +26,8 @@ const resources = {
         'application/styles/modals.css',
         'application/styles/tables.css',
         'application/styles/main.css',
-        'application/styles/utils.css'
+        'application/styles/utils.css',
+        'application/styles/buttons.css'
     ],
     /**
      * Copy

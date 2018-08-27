@@ -1,0 +1,12 @@
+.hlq-btn {
+    border-radius: 3px;
+    box-shadow: -0.1px 2px 2.9px 0.1px rgba(179, 179, 179, 0.67);
+    font-size: 12px;
+    font-weight: 900;
+}
+
+.hlq-btn-yellow {
+    background-color: #efc203;
+    color:#fff;
+
+}

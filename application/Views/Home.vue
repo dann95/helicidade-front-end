@@ -13,55 +13,45 @@
                             <div class="home-search-input-container">
                                 <input type="text" placeholder="search input...">
                                 <ul class="home-search-input-autocomplete">
-                                    <li data-option-value="1">BZ1409</li>
-                                    <li data-option-value="2">BZ1408</li>
+                                    <li v-for="sugg in landings.autoComplete">{{ sugg.name }}</li>
                                 </ul>
                                 <i class="fa fa-search"></i>
                             </div>
                         </div>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <button>confirmar</button>
                     </span>
                     <span style="float:right;">
-                        <a href="#">VER POUSOS DETALHADOS</a>
+                        <a href="#" class="home-detailed-link">VER POUSOS DETALHADOS</a>
                     </span>
-                    <single-line-chart :xAxis="xAxis"/>
+                    <br style="clear:both;">
+                    <single-line-chart
+                            :values="landings.values"
+                            :xAxis="landings.xAxis"/>
                 </div>
             </div>
             <div class="home-white-box">
                 <h2>ABASTECIMENTO</h2>
                 <h3>Informações de abastecimento das aeronaves</h3>
 
-                <div class="home-search-input-container">
-                    <input type="text" placeholder="search input...">
-                    <ul class="home-search-input-autocomplete">
-                        <li>BZ1409</li>
-                    </ul>
-                    <i class="fa fa-search"></i>
+                <!--<div class="home-search-input-container">-->
+                    <!--<input type="text" placeholder="search input...">-->
+                    <!--<ul class="home-search-input-autocomplete">-->
+                        <!--<li>BZ1409</li>-->
+                    <!--</ul>-->
+                    <!--<i class="fa fa-search"></i>-->
+                <!--</div>-->
+
+                <div class="home-airplane-refuling" v-for="fueling in fueling.lasts">
+                    <h3>{{ prefix(fueling.prefixo) }}</h3>
+
+                    <h4>
+                        Data do último abastecimento: {{ fueling.dt_registro.split('-').reverse().join('/') }}
+                    </h4>
+
+                    <progress-bar :percent="fueling.porcentagem_tanque_1"/>
+                    <progress-bar :percent="fueling.porcentagem_tanque_2"/>
+
+                    <span class="home-fueling-type">Tipo de combustível: <strong :class="{'fueling-color-jet1': fueling.combustivel == 2, 'fueling-color-avgas' : fueling.combustivel == 1}">{{(fueling.combustivel == 2) ? 'JET-A1' : 'AVGAS' }}</strong></span>
                 </div>
-
-                <progress-bar :percent="x"/>
-
             </div>
         </div>
         <div class="col-lg-6">
@@ -113,6 +103,7 @@
     import SingleLineChart from '../Components/Charts/SingleLineChart.vue';
     import DoughnutInfographic from '../Components/Charts/DoughnutInfographic.vue';
     import ProgressBar from '../Components/Charts/ProgressBar.vue';
+    import { prefix } from '../utils';
 
     export default {
         name: "Home",
@@ -121,10 +112,44 @@
             DoughnutInfographic,
             ProgressBar
         },
+        beforeRouteEnter(to, from, next) {
+            next(vm => {
+
+                vm.fetchLandings()
+                    .then(vm.setLandingCharts)
+
+                vm.fetchFueling()
+                    .then(vm.setFuelingCharts)
+
+            })
+        },
+        methods: {
+            prefix,
+            fetchFueling() {
+                return this.$sdk.fueling.last()
+            },
+            setFuelingCharts(res) {
+                this.fueling.lasts = res
+            },
+            fetchLandings() {
+                return this.$sdk.landings.findByPeriod(this.landings.start, this.landings.end)
+            },
+            setLandingCharts(res) {
+                this.landings.values = res
+            }
+        },
         data() {
             return {
-                x: 50,
-                xAxis: [],
+                fueling: {
+                    lasts: []
+                },
+                landings: {
+                    start: moment().format("YYYY-MM-DD"),
+                    end: moment().format("YYYY-MM-DD"),
+                    xAxis: ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23'],
+                    values: [],
+                    autoComplete: []
+                },
                 dseries: [
                     {
                         name: 'Pouso',
@@ -151,11 +176,25 @@
         },
         mounted() {
             let self = this
+
+            // console.log(prefix)
         }
     }
 </script>
 
 <style scoped>
+
+    .home-detailed-link {
+        font-size: 13.5px;
+        font-weight: 900;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: normal;
+        color: #efc203;
+        text-decoration:none;
+    }
+
     .home-white-box {
         height: 688px;
         border-radius: 3px;
@@ -169,10 +208,6 @@
         font-family: Lato;
         font-size: 23.5px;
         font-weight: 600;
-        /*font-style: normal;*/
-        /*font-stretch: normal;*/
-        /*line-height: 1.79;*/
-        /*letter-spacing: 0.5px;*/
         text-align: left;
         color: #1a1a1a;
         margin-bottom:5px;
@@ -181,10 +216,6 @@
     .home-white-box > h3 {
         font-size: 17.5px;
         font-weight: 300;
-        /*font-style: normal;*/
-        /*font-stretch: normal;*/
-        /*line-height: 4.14;*/
-        /*letter-spacing: 0.2px;*/
         text-align: left;
         color: #1a1a1a;
         margin-top:5px;
@@ -246,6 +277,7 @@
         margin:0;
         list-style-type: none;
         width:100%;
+        z-index:5;
     }
 
     .home-search-input-container > .home-search-input-autocomplete > li {
@@ -259,6 +291,15 @@
         color: #2c303b;
         font-weight: 600;
         font-size: 14px;
+        z-index:6;
+        background-color:#fff;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        cursor: pointer;
     }
 
 </style>
