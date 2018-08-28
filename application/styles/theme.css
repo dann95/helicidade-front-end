@@ -22,15 +22,11 @@ body {
         display:none !important;
     }
 
-    #top-content-bar {
-        width:100%;
-        position:fixed;
-        z-index:99;
+    #content-container {
+        margin-top:43px;
+        margin-bottom:43px;
     }
 
-    #content-container {
-        margin-top:114px;
-    }
     #logo {
         width: 119px;
         height: 34px;
@@ -49,6 +45,8 @@ body {
         background-color:#eee;
         position: fixed;
         height: 100%;
+        overflow-y:auto;
+        overflow-x:hidden;
     }
 
     #content {
@@ -86,7 +84,7 @@ body {
     }
 
     #side-bar-list > li:first-child {
-        margin-top:60px !important;
+        margin-top:15px !important;
     }
 
     .side-bar-item.active {
@@ -99,9 +97,6 @@ body {
 @media (max-width: 992px) {
     #logo {
         /*@todo logo size mobile*/
-    }
-    #top-content-bar {
-        display: none !important;
     }
     #wrapper {
         display: block;
@@ -165,26 +160,6 @@ body {
     float:left;
 }
 
-#top-content-bar {
-    width:100%;
-    height:95px;
-    background-color:#eee;
-    color:#1a1a1a;
-    display:block;
-    float:left;
-}
-
-#top-content-bar-left {
-    width:calc(calc(100% - 245px) * 0.3);
-    float:left;
-    height:100%;
-}
-
-#top-content-bar-right {
-    width:calc(calc(100% - 245px) * 0.7);
-    float:left;
-    height:100%;
-}
 
 #user-options {
     list-style-type: none;
@@ -198,3 +173,4 @@ body {
 .fueling-color-avgas {
     color: #ae2218 !important;
 }
+

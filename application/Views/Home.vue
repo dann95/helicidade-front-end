@@ -41,10 +41,10 @@
                 <!--</div>-->
 
                 <div class="home-airplane-refuling" v-for="fueling in fueling.lasts">
-                    <h3>{{ prefix(fueling.prefixo) }}</h3>
+                    <h3>{{ prefix(opt(fueling.prefixo, "")) }}</h3>
 
                     <h4>
-                        Data do último abastecimento: {{ fueling.dt_registro.split('-').reverse().join('/') }}
+                        Data do último abastecimento: {{ fueling.dt_registro.split('-').reverse().join('/')+' '+fueling.hr_registro }}
                     </h4>
 
                     <progress-bar :percent="fueling.porcentagem_tanque_1"/>
@@ -69,30 +69,60 @@
                 <h2>Próximos vôos agendados</h2>
                 <h3>Datas dos próximos vôos agendados.</h3>
 
-                <div class="cal">
-                    <div class="cal-header">
-                        <span class="cal-left  cal-button" id="prev"> &lang; </span>
-                        <span class="cal-left  cal-hook"></span>
-                        <span class="cal-month-year"> June 20&0 </span>
-                        <span class="cal-right  cal-hook"></span>
-                        <span class="cal-right  cal-button" id="next"> &rang; </span>
+                <div id="home-calendar-month">
+                    <div id="home-calendar-controls">August</div>
+                    <div id="days">
+                        <div class="home-calendar-cell week"><p>DOM</p></div>
+                        <div class="home-calendar-cell week"><p>SEG</p></div>
+                        <div class="home-calendar-cell week"><p>TER</p></div>
+                        <div class="home-calendar-cell week"><p>QUA</p></div>
+                        <div class="home-calendar-cell week"><p>QUI</p></div>
+                        <div class="home-calendar-cell week"><p>SEX</p></div>
+                        <div class="home-calendar-cell week"><p>SAB</p></div>
+                        <div class="home-dayOfMonth home-calendar-prevMonth home-calendar-cell"><p>30</p></div>
+                        <div class="home-dayOfMonth home-calendar-prevMonth home-calendar-cell"><p>31</p></div>
+                        <div class="home-dayOfMonth home-calendar-cell"><div><p>1</p></div></div>
+                        <div class="home-dayOfMonth home-calendar-cell"><div><p>2</p></div></div>
+                        <div class="home-dayOfMonth home-calendar-cell"><div><p>3</p></div></div>
+                        <div class="home-dayOfMonth home-calendar-cell"><div><p>4</p></div></div>
+                        <div class="home-dayOfMonth home-calendar-cell"><div><p>5</p></div></div>
+                        <div class="home-dayOfMonth home-calendar-cell"><div><p>6</p></div></div>
+                        <div class="home-dayOfMonth home-calendar-cell"><div><p>7</p></div></div>
+                        <div class="home-dayOfMonth home-calendar-cell"><div><p>8</p></div></div>
+                        <div class="home-dayOfMonth home-calendar-cell"><div><p>9</p></div></div>
+                        <div class="home-dayOfMonth home-calendar-cell"><div><p>10</p></div></div>
+                        <div class="home-dayOfMonth home-calendar-cell"><div><p>11</p></div></div>
+                        <div class="home-dayOfMonth home-calendar-cell"><div><p>12</p></div></div>
+                        <div class="home-dayOfMonth home-calendar-cell"><div><p>13</p></div></div>
+                        <div class="home-dayOfMonth home-calendar-cell"><div><p>14</p></div></div>
+                        <div class="home-dayOfMonth home-calendar-cell"><div><p>15</p></div></div>
+                        <div class="home-dayOfMonth home-calendar-cell"><div><p>16</p></div></div>
+                        <div class="home-dayOfMonth home-calendar-cell"><div><p>17</p></div></div>
+                        <div class="home-dayOfMonth home-calendar-cell"><div><p>18</p></div></div>
+                        <div class="home-dayOfMonth home-calendar-cell"><div><p>19</p></div></div>
+                        <div class="home-dayOfMonth home-calendar-cell"><div><p>20</p></div></div>
+                        <div class="home-dayOfMonth home-calendar-cell"><div><p>21</p></div></div>
+                        <div class="home-dayOfMonth home-calendar-cell"><div><p>22</p></div></div>
+                        <div class="home-dayOfMonth home-calendar-cell"><div><p>23</p></div></div>
+                        <div class="home-dayOfMonth home-calendar-cell"><div><p>24</p></div></div>
+                        <div class="home-dayOfMonth home-calendar-cell"><div><p>25</p></div></div>
+                        <div class="home-dayOfMonth home-calendar-cell"><div><p>26</p></div></div>
+                        <div class="home-dayOfMonth home-calendar-cell"><div><p>27</p></div></div>
+                        <div class="home-dayOfMonth current home-calendar-cell"><div><p>28</p></div></div>
+                        <div class="home-dayOfMonth home-calendar-cell"><div><p>29</p></div></div>
+                        <div class="home-dayOfMonth home-calendar-cell"><div><p>30</p></div></div>
+                        <div class="home-dayOfMonth home-calendar-cell">
+                            <div>
+                                <p>31</p>
+                            </div>
+                        </div>
+                        <div class="home-dayOfMonth home-calendar-prevMonth home-calendar-cell"><p>1</p></div>
+                        <div class="home-dayOfMonth home-calendar-prevMonth home-calendar-cell"><p>2</p></div>
                     </div>
-                    <table class="cal-days">
-                        <tr>
-                            <td>dom</td>
-                            <td>seg</td>
-                            <td>ter</td>
-                            <td>qua</td>
-                            <td>qui</td>
-                            <td>sex</td>
-                            <td>sab</td>
-                        </tr>
-                    </table>
-                    <div class="cal-frame">
 
 
-                    </div>
                 </div>
+
             </div>
         </div>
     </div>
@@ -103,7 +133,7 @@
     import SingleLineChart from '../Components/Charts/SingleLineChart.vue';
     import DoughnutInfographic from '../Components/Charts/DoughnutInfographic.vue';
     import ProgressBar from '../Components/Charts/ProgressBar.vue';
-    import { prefix } from '../utils';
+    import { prefix, opt } from '../utils';
 
     export default {
         name: "Home",
@@ -124,6 +154,7 @@
             })
         },
         methods: {
+            opt,
             prefix,
             fetchFueling() {
                 return this.$sdk.fueling.last()
@@ -176,8 +207,6 @@
         },
         mounted() {
             let self = this
-
-            // console.log(prefix)
         }
     }
 </script>
@@ -301,5 +330,68 @@
         user-select: none;
         cursor: pointer;
     }
+
+
+
+
+
+    #home-calendar-month{
+        margin:50px auto;
+        box-sizing:border-box;
+        text-align: left;
+        font-size:24px;
+        overflow:hidden;
+        color:#1F1F1F;
+    }
+    #home-calendar-controls{
+        font-size:18px;
+        padding: 10px;
+        box-sizing:border-box;
+        z-index: 3;
+    }
+
+    #days{
+        border-top: none;
+        display:flex;
+        flex-flow: row wrap;
+        justify-content: flex-start;
+        -webkit-translate: 0.3s all ease-in-out;
+        transition: 0.3s all ease-in-out;
+    }
+
+    .week{
+
+    }
+    .home-calendar-prevMonth{
+        color: lightgrey;
+    }
+    .home-calendar-cell{
+        display:inline-block;
+        width:calc(100% / 7);
+        text-align: center;
+        box-sizing:border-box;
+        font-size:18px;
+    }
+    .home-dayOfMonth{
+        /*border: 1px solid lightgrey;*/
+    }
+
+    .home-dayOfMonth:hover,.current{
+        cursor:pointer;
+        color: white;
+        transition: 0.3s all ease-in-out;
+    }
+
+    .home-dayOfMonth.current > div {
+        border-radius: 50%;
+        background-color:#efc203;
+        border:1px solid transparent;
+        height:100%;
+        width:100%;
+    }
+
+
+
+
 
 </style>

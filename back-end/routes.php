@@ -39,7 +39,7 @@ $routes = function (\Slim\App $router) {
 
                     $token = JWT::encode([
                         'sub' => 'web',
-                        'exp' => $n + 3600,
+                        'exp' => $n + 3600 * 8,
                         'iat' => $n,
                         'nbf' => $n,
                         'jti' => $session->sess_id
@@ -91,6 +91,14 @@ $routes = function (\Slim\App $router) {
 
 
         $router->group('/landings', function () use ($router) {
+
+            $router->get('', function (Request $request, Response $response) {
+                $repository = new \Heliquality\Repositories\LandingsRepository();
+
+                $response->getBody()->write(json_encode($repository->all()));
+
+                return $response;
+            });
 
             $router->post('/findByPeriod', function (Request $request, Response $response) {
 

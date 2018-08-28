@@ -10,6 +10,9 @@ const presenter = {
         })
 
         return result
+    },
+    many(res) {
+        return res.data
     }
 }
 

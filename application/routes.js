@@ -4,6 +4,11 @@ import Pilots from './Views/Pilots.vue';
 import Movements from './Views/Movements.vue';
 import Login from './Views/Login.vue';
 import Schedules from './Views/Schedules.vue';
+import Airplanes from './Views/Airplanes.vue';
+import Landings from './Views/Landings.vue';
+import Fuelling from './Views/Fuelling.vue';
+import Settings from './Views/Settings.vue';
+import Dashboard from './Views/Dashboard.vue';
 
 import App from './Layouts/App.vue';
 import LoginTPL from './Layouts/Login.vue';
@@ -59,6 +64,51 @@ const routes = [
                 meta: {
                     auth: true,
                     title: 'Heliquality - agendamentos'
+                }
+            },
+            {
+                path: '/airplanes',
+                name: 'airplanes',
+                component: Airplanes,
+                meta: {
+                    auth: true,
+                    title: 'Heliquality - aeronaves'
+                }
+            },
+            {
+                path: '/landings',
+                name: 'landings',
+                component: Landings,
+                meta: {
+                    auth: true,
+                    title: 'Heliquality - pousos'
+                }
+            },
+            {
+                path: '/fuelling',
+                name: 'fuelling',
+                component: Fuelling,
+                meta: {
+                    auth: true,
+                    title: 'Heliquality - abastecimentos'
+                }
+            },
+            {
+                path: '/settings',
+                name: 'settings',
+                component: Settings,
+                meta: {
+                    auth: true,
+                    title: 'Heliquality - configurações'
+                }
+            },
+            {
+                path: '/dashboard',
+                name: 'dashboard',
+                component: Dashboard,
+                meta: {
+                    auth: true,
+                    title: 'Heliquality - dashboard'
                 }
             }
         ],

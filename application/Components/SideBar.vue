@@ -21,9 +21,20 @@
                     <img class="side-bar-icon" src="/dist/img/usuario.svg" height="23" width="23" alt="">Conta
                 </router-link>
             </li>
+
+            <li :class="classesForLink('airplanes')">
+                <router-link :to="{name: 'airplanes'}">
+                    <img class="side-bar-icon" src="/dist/img/helicoptero.svg" height="23" width="23" alt="">Aeronaves
+                </router-link>
+            </li>
+            <li :class="classesForLink('landings')">
+                <router-link :to="{name: 'landings'}">
+                    <img class="side-bar-icon" src="/dist/img/pouso.svg" height="23" width="23" alt="">Pousos
+                </router-link>
+            </li>
             <li :class="classesForLink('movements')">
                 <router-link :to="{name: 'movements'}">
-                    <img class="side-bar-icon" src="/dist/img/helice.svg" height="23" width="23" alt="">Movimentação
+                    <img class="side-bar-icon" src="/dist/img/gasolina.svg" height="23" width="23" alt="">Movimentações
                 </router-link>
             </li>
             <li :class="classesForLink('schedules')">
@@ -31,9 +42,24 @@
                     <img class="side-bar-icon" src="/dist/img/calendario.svg" height="23" width="23" alt="">Agendamentos
                 </router-link>
             </li>
+            <li :class="classesForLink('fuelling')">
+                <router-link :to="{name: 'fuelling'}">
+                    <img class="side-bar-icon" src="/dist/img/helice.svg" height="23" width="23" alt="">Abastecimentos
+                </router-link>
+            </li>
             <li :class="classesForLink('pilots')">
                 <router-link :to="{name: 'pilots'}">
-                    <img class="side-bar-icon" src="/dist/img/piloto_1.svg" height="23" width="23" alt="">Piloto
+                    <img class="side-bar-icon" src="/dist/img/piloto_1.svg" height="23" width="23" alt="">Pilotos
+                </router-link>
+            </li>
+            <li :class="classesForLink('settings')">
+                <router-link :to="{name: 'settings'}">
+                    <img class="side-bar-icon" src="/dist/img/configuracoes.svg" height="23" width="23" alt="">Configurações
+                </router-link>
+            </li>
+            <li :class="classesForLink('dashboard')">
+                <router-link :to="{name: 'dashboard'}">
+                    <img class="side-bar-icon" src="/dist/img/helice.svg" height="23" width="23" alt="">Dashfull
                 </router-link>
             </li>
             <li class="side-bar-item">

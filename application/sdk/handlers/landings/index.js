@@ -15,7 +15,15 @@ const landings = http => {
 
             return http.post('landings/findByPeriod', body)
                 .then(presenter.single)
+        },
+        all() {
+            return http.get('landings')
+                .then(presenter.many)
         }
+        // paginate(perPage, currentPage) {
+        //     return http.get(`landings/paginate?amount=${perPage}&page=${currentPage}`)
+        //         .then(presenter.many)
+        // }
     }
 }
 
