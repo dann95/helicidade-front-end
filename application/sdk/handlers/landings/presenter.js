@@ -1,5 +1,5 @@
 const presenter = {
-    single(res) {
+    dayCount(res) {
 
         const data = res.data
 
@@ -12,6 +12,9 @@ const presenter = {
         return result
     },
     many(res) {
+        return res.data
+    },
+    single(res) {
         return res.data
     }
 }

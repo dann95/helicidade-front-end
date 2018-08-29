@@ -95,13 +95,20 @@ body {
 }
 
 @media (max-width: 992px) {
+
     #logo {
-        /*@todo logo size mobile*/
+        height:80px;
+        width:200px;
     }
+
     #wrapper {
         display: block;
         width:100%;
         height:100%;
+    }
+
+    #wrapper.mobile-nav-open > #side-bar > #side-bar-list {
+        display: block !important;
     }
 
     #side-bar {
@@ -111,10 +118,30 @@ body {
         top:0;
         left:0;
         height: 280px;
+        z-index:9999;
     }
 
-    #wrapper.mobile-nav-open {
-        padding-top:280px;
+    #side-bar-list {
+        display:none !important;
+        background-color: #eee;
+        width: 100vw !important;
+    }
+
+    #side-bar-list > li+li {
+        margin-top:15px !important;
+    }
+
+    #side-bar-list > li > a{
+        font-size: 16px !important;
+        text-decoration:none !important;
+    }
+
+    #side-bar-list > li > a > img{
+        display:none !important; /* Disable icons !*/
+    }
+
+    #wrapper {
+        padding-top:105px;
     }
 
     #content {

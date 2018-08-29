@@ -23,3 +23,15 @@
     user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome and Opera */
 }
+
+.tc {
+    text-align: center;
+}
+
+.tl {
+    text-align: left;
+}
+
+.tr {
+    text-align: center;
+}

@@ -9,12 +9,22 @@ const singlePeriodQuery = (start,end) => {
 
 const landings = http => {
     return {
+        find(id) {
+            return http.get(`landings/${id}`)
+                .then(presenter.single)
+        },
         findByPeriod(start, end)  {
 
             const body = singlePeriodQuery(start, end)
 
             return http.post('landings/findByPeriod', body)
-                .then(presenter.single)
+                .then(presenter.dayCount)
+        },
+        findInPeriod(start, end) {
+            const body = singlePeriodQuery(start, end)
+
+            return http.post('landings/findByPeriod', body)
+                .then(presenter.many)
         },
         all() {
             return http.get('landings')

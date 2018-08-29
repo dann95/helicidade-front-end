@@ -3,10 +3,16 @@
     box-shadow: -0.1px 2px 2.9px 0.1px rgba(179, 179, 179, 0.67);
     font-size: 12px;
     font-weight: 900;
+    height:32px;
+    padding:2px 21px 2px 21px;
+    border:none;
 }
 
 .hlq-btn-yellow {
     background-color: #efc203;
     color:#fff;
+}
 
+.hlq-btn:focus {
+    outline:0;
 }

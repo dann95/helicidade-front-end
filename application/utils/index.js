@@ -16,9 +16,12 @@ const nested_opt = (object, path, defaultValue = null) => path
     .reduce((o, p) => o ? o[p] : defaultValue, object)
 
 
+const dt2br = s => s.split('-').reverse().join('/')
+
 export {
     prefix,
     prefix2str,
     opt,
-    nested_opt
+    nested_opt,
+    dt2br
 }

@@ -25,10 +25,23 @@ class LandingsRepository
     }
 
     /**
+     * @param $id
+     * @return PreOcorrencia|PreOcorrencia[]|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|null
+     */
+    public function find($id)
+    {
+        return PreOcorrencia::with(['photos'])
+            ->where('id_evento', 2)
+            ->find($id);
+    }
+
+    /**
      * @return mixed
      */
     public function all()
     {
-        return PreOcorrencia::where('id_evento', 2)->orderBy('id', 'desc')->get();
+        return PreOcorrencia::where('id_evento', 2)
+            ->orderBy('id', 'desc')
+            ->get();
     }
 }

@@ -113,6 +113,18 @@ $routes = function (\Slim\App $router) {
                 return $response;
             });
 
+            $router->get('/{id}', function (Request $request, Response $response, $args) {
+                $repository = new \Heliquality\Repositories\LandingsRepository();
+
+                $q = $repository->find($args['id']);
+
+                $res = ($q) ? ['found' => true, 'landing' => $q] : ['found' => false];
+
+                $response->getBody()->write(json_encode($res));
+
+                return $response;
+            });
+
         });
 
         $router->group('/fueling', function () use($router) {

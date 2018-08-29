@@ -5,7 +5,11 @@ import Movements from './Views/Movements.vue';
 import Login from './Views/Login.vue';
 import Schedules from './Views/Schedules.vue';
 import Airplanes from './Views/Airplanes.vue';
-import Landings from './Views/Landings.vue';
+
+import Landings from './Views/Landings/All.vue';
+import Landing from './Views/Landings/View.vue';
+
+
 import Fuelling from './Views/Fuelling.vue';
 import Settings from './Views/Settings.vue';
 import Dashboard from './Views/Dashboard.vue';
@@ -82,6 +86,14 @@ const routes = [
                 meta: {
                     auth: true,
                     title: 'Heliquality - pousos'
+                }
+            },
+            {
+                path: '/landings/:id',
+                name: 'landings.view',
+                component: Landing,
+                meta: {
+                    auth: true
                 }
             },
             {

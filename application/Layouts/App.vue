@@ -1,5 +1,5 @@
 <template>
-    <div id="wrapper" class="mobile-nav-open">
+    <div id="wrapper" :class="{'mobile-nav-open': mobileNav}">
         <side-bar />
         <div id="content">
             <div :class="_containerClass" id="content-container">
@@ -10,6 +10,7 @@
 </template>
 
 <script>
+
     import SideBar from '../Components/SideBar.vue';
     import SearchInput from '../Components/SearchInput.vue';
 
@@ -17,7 +18,8 @@
         name: "App",
         data() {
             return {
-                width: window.innerWidth
+                width: window.innerWidth,
+                mobileNav: false
             }
         },
         components: {
@@ -25,8 +27,12 @@
             SearchInput
         },
         mounted() {
+            let self = this
             window.addEventListener('resize', () => {
                 this.width = window.innerWidth
+            })
+            this.$bus.on('toggle-mobile-nav', () => {
+                self.mobileNav = ! self.mobileNav
             })
         },
         computed: {

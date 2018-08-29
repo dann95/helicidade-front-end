@@ -5,7 +5,7 @@
                 <img src="/dist/img/logo.svg" id="logo">
             </div>
             <div id="logo-right-nav">
-                <button class="fr">
+                <button class="fr" @click="toggleMobileNav()">
                     <i class="fa fa-bars"></i>
                 </button>
             </div>
@@ -82,6 +82,9 @@
                     acc.push('active')
 
                 return acc
+            },
+            toggleMobileNav() {
+                this.$bus.emit('toggle-mobile-nav')
             }
         },
         computed: {
