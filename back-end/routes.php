@@ -90,6 +90,17 @@ $routes = function (\Slim\App $router) {
         });
 
 
+        $router->group('/movements', function () use($router) {
+            $router->get('/all', function (Request $request, Response $response) {
+
+                $repository = new \Heliquality\Repositories\MovementsRepository();
+
+                $response->getBody()->write(json_encode($repository->all()));
+
+                return $response;
+            });
+        });
+
         $router->group('/landings', function () use ($router) {
 
             $router->get('', function (Request $request, Response $response) {

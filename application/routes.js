@@ -1,7 +1,6 @@
 import Home from './Views/Home.vue';
 import Account from './Views/Account.vue';
 import Pilots from './Views/Pilots.vue';
-import Movements from './Views/Movements.vue';
 import Login from './Views/Login.vue';
 import Schedules from './Views/Schedules.vue';
 import Airplanes from './Views/Airplanes.vue';
@@ -9,6 +8,8 @@ import Airplanes from './Views/Airplanes.vue';
 import Landings from './Views/Landings/All.vue';
 import Landing from './Views/Landings/View.vue';
 
+import Movements from './Views/Movements/All.vue';
+import Movement from './Views/Movements/View.vue';
 
 import Fuelling from './Views/Fuelling.vue';
 import Settings from './Views/Settings.vue';
@@ -56,6 +57,15 @@ const routes = [
                 path: '/movements',
                 name: 'movements',
                 component: Movements,
+                meta: {
+                    auth: true,
+                    title: 'Heliquality - movimentos'
+                }
+            },
+            {
+                path: '/movements/:id',
+                name: 'movements.view',
+                component: Movement,
                 meta: {
                     auth: true,
                     title: 'Heliquality - movimentos'

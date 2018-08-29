@@ -198,9 +198,9 @@
                         color: '#303234'
                     },
                     {
-                        name: 'Backoffice',
+                        name: 'Falso positivo',
                         value: 50,
-                        color: '#9e9e9e'
+                        color: '#DD241A'
                     }
                 ]
             }
