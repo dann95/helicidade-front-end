@@ -90,6 +90,18 @@ $routes = function (\Slim\App $router) {
         });
 
 
+        $router->group('/analytics', function () use($router){
+
+            $router->get('/landings-and-checklists', function (Request $request, Response $response) {
+
+                $repository = new \Heliquality\Repositories\AnalyticsRepository();
+
+                $response->getBody()->write(json_encode($repository->landingsAndChecklists('2018-08-30')));
+
+                return $response;
+            });
+        });
+
         $router->group('/movements', function () use($router) {
             $router->get('/all', function (Request $request, Response $response) {
 

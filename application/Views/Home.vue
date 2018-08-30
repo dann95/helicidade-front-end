@@ -12,9 +12,9 @@
                         <div style="width:184px;">
                             <div class="home-search-input-container">
                                 <input type="text" placeholder="search input...">
-                                <ul class="home-search-input-autocomplete">
-                                    <li v-for="sugg in landings.autoComplete">{{ sugg.name }}</li>
-                                </ul>
+                                <!--<ul class="home-search-input-autocomplete">-->
+                                    <!--<li v-for="sugg in landings.autoComplete">{{ sugg.name }}</li>-->
+                                <!--</ul>-->
                                 <i class="fa fa-search"></i>
                             </div>
                         </div>
@@ -23,9 +23,9 @@
                         <a href="#" class="home-detailed-link">VER POUSOS DETALHADOS</a>
                     </span>
                     <br style="clear:both;">
-                    <single-line-chart
-                            :values="landings.values"
-                            :xAxis="landings.xAxis"/>
+                    <multi-line-chart
+                            :series="lec.series"
+                            :xAxis="lec.xAxis"/>
                 </div>
             </div>
             <div class="home-white-box">
@@ -130,7 +130,7 @@
 
 <script>
 
-    import SingleLineChart from '../Components/Charts/SingleLineChart.vue';
+    import MultiLineChart from '../Components/Charts/MultiLineChart.vue';
     import DoughnutInfographic from '../Components/Charts/DoughnutInfographic.vue';
     import ProgressBar from '../Components/Charts/ProgressBar.vue';
     import { prefix, opt } from '../utils';
@@ -138,15 +138,15 @@
     export default {
         name: "Home",
         components: {
-            SingleLineChart,
+            MultiLineChart,
             DoughnutInfographic,
             ProgressBar
         },
         beforeRouteEnter(to, from, next) {
             next(vm => {
 
-                vm.fetchLandings()
-                    .then(vm.setLandingCharts)
+                vm.fetchLandingsAndChecklists()
+                    .then(vm.setLandingAndChecklists)
 
                 vm.fetchFueling()
                     .then(vm.setFuelingCharts)
@@ -162,11 +162,28 @@
             setFuelingCharts(res) {
                 this.fueling.lasts = res
             },
-            fetchLandings() {
-                return this.$sdk.landings.findByPeriod(this.landings.start, this.landings.end)
+            fetchLandingsAndChecklists() {
+                return this.$sdk.analytics.landingsAndChecklists()
             },
-            setLandingCharts(res) {
-                this.landings.values = res
+            setLandingAndChecklists(res) {
+                this.lec.series = [
+                    {
+                        name: 'Pousos',
+                        color: '#efc203',
+                        values: res.landings
+                    },
+                    {
+                        name: 'Falso positivo',
+                        color: 'red',
+                        values: res.fake
+                    },
+                    {
+                        name: 'Checklists',
+                        color: 'grey',
+                        type: 'dashed',
+                        values: res.checklists
+                    }
+                ]
             }
         },
         data() {
@@ -174,12 +191,11 @@
                 fueling: {
                     lasts: []
                 },
-                landings: {
+                lec: {
                     start: moment().format("YYYY-MM-DD"),
                     end: moment().format("YYYY-MM-DD"),
-                    xAxis: ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23'],
-                    values: [],
-                    autoComplete: []
+                    xAxis: ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23'].map(i => `${i} hrs`),
+                    series: []
                 },
                 dseries: [
                     {
@@ -389,9 +405,4 @@
         height:100%;
         width:100%;
     }
-
-
-
-
-
 </style>
