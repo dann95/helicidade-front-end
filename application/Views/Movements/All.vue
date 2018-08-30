@@ -1,5 +1,6 @@
 <template>
     <div>
+        escolha uma data: <date-picker @update="setDate" :date="date"/>
         <div>
             <div class="table100 ver1 m-b-110">
                 <div class="table100-head">
@@ -40,26 +41,36 @@
 <script>
 
     import {dt2br} from '../../utils';
+    import DatePicker from '../../Components/Inputs/DatePicker.vue';
 
     export default {
+        components: {
+            DatePicker
+        },
         name: "Movements-All",
         data() {
             return {
-                movements: []
+                movements: [],
+                date: moment().format("YYYY-MM-DD")
             }
         },
         methods: {
             dt2br,
-            fetchMovements() {
-                return this.$sdk.movements.all()
+            fetchMovementsForDate() {
+                return this.$sdk.movements.findByPeriod(this.date, this.date)
             },
             setMovements(res) {
                 this.movements = res.reverse()
+            },
+            setDate(date) {
+                this.date = date
+                this.fetchMovementsForDate()
+                    .then(this.setMovements)
             }
         },
         beforeRouteEnter(to, from, next) {
             next(vm => {
-                vm.fetchMovements()
+                vm.fetchMovementsForDate()
                     .then(vm.setMovements)
             })
         }

@@ -1,5 +1,6 @@
 <template>
     <div>
+        escolha uma data: <date-picker :date="date" @update="updateDate"/>
         <div>
             <div class="table100 ver1 m-b-110">
                 <div class="table100-head">
@@ -34,14 +35,19 @@
                 </div>
             </div>
         </div>
+
     </div>
 </template>
 
 <script>
 
     import {dt2br} from "../../utils";
+    import DatePicker from '../../Components/Inputs/DatePicker.vue';
 
     export default {
+        components: {
+            DatePicker
+        },
         name: "Landings",
         data() {
             return {
@@ -50,6 +56,13 @@
             }
         },
         methods: {
+            updateDate(val) {
+
+                this.date = val
+
+                this.fetchAllForDate()
+                    .then(this.setLandings)
+            },
             dt2br,
             fetchAll() {
                 return this.$sdk.landings.all()
@@ -71,9 +84,6 @@
             next(vm => {
                 vm.fetchAllForDate()
                     .then(vm.setLandings)
-                // vm.fetchLandingsForCurrentPage()
-                //     .then(vm.setItemsAndPagesInfo)
-                // @todo CRIAR PAGINAÇÃO...
             })
         }
     }

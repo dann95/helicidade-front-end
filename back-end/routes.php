@@ -99,6 +99,14 @@ $routes = function (\Slim\App $router) {
 
                 return $response;
             });
+
+            $router->get('/findByPeriod/{start};{end}', function (Request $request, Response $response, $args) {
+                $repository = new \Heliquality\Repositories\MovementsRepository();
+
+                $response->getBody()->write(json_encode($repository->findByPeriod($args['start'], $args['end'])));
+
+                return $response;
+            });
         });
 
         $router->group('/landings', function () use ($router) {
@@ -111,13 +119,10 @@ $routes = function (\Slim\App $router) {
                 return $response;
             });
 
-            $router->post('/findByPeriod', function (Request $request, Response $response) {
-
-                $body = $request->getParsedBody();
-
+            $router->get('/findByPeriod/{start};{end}', function (Request $request, Response $response, $args) {
                 $repository = new \Heliquality\Repositories\LandingsRepository();
 
-                $data = $repository->findByPeriod($body['start'], $body['end']);
+                $data = $repository->findByPeriod($args['start'], $args['end']);
 
                 $response->getBody()->write(json_encode($data));
 

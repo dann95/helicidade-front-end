@@ -19,6 +19,7 @@ const resources = {
         'node_modules/normalize.css/normalize.css',
         'node_modules/bootstrap/dist/css/bootstrap-grid.css',
         'node_modules/font-awesome/css/font-awesome.min.css',
+        'node_modules/flatpickr/dist/flatpickr.css',
         'application/styles/theme.css',
         'application/styles/calendars.css',
         'application/styles/inputs.css',

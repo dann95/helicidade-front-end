@@ -15,6 +15,8 @@ const nested_opt = (object, path, defaultValue = null) => path
     .split('.')
     .reduce((o, p) => o ? o[p] : defaultValue, object)
 
+const cloneObject = obj => Object.assign({}, obj)
+
 
 const dt2br = s => s.split('-').reverse().join('/')
 
@@ -23,5 +25,6 @@ export {
     prefix2str,
     opt,
     nested_opt,
-    dt2br
+    dt2br,
+    cloneObject
 }
