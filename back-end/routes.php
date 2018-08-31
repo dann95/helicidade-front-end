@@ -92,11 +92,19 @@ $routes = function (\Slim\App $router) {
 
         $router->group('/analytics', function () use($router){
 
-            $router->get('/landings-and-checklists', function (Request $request, Response $response) {
+            $router->get('/indicators/{start};{end}', function (Request $request, Response $response, $args) {
+                $repository = new \Heliquality\Repositories\AnalyticsRepository();
+
+                $response->getBody()->write(json_encode($repository->indicators($args['start'], $args['end'])));
+
+                return $response;
+            });
+
+            $router->get('/landings-and-checklists/{day}', function (Request $request, Response $response, $args) {
 
                 $repository = new \Heliquality\Repositories\AnalyticsRepository();
 
-                $response->getBody()->write(json_encode($repository->landingsAndChecklists('2018-08-30')));
+                $response->getBody()->write(json_encode($repository->landingsAndChecklists($args['day'])));
 
                 return $response;
             });

@@ -12,15 +12,14 @@
                         <div style="width:184px;">
                             <div class="home-search-input-container">
                                 <input type="text" placeholder="search input...">
-                                <!--<ul class="home-search-input-autocomplete">-->
-                                    <!--<li v-for="sugg in landings.autoComplete">{{ sugg.name }}</li>-->
-                                <!--</ul>-->
                                 <i class="fa fa-search"></i>
                             </div>
                         </div>
                     </span>
                     <span style="float:right;">
-                        <a href="#" class="home-detailed-link">VER POUSOS DETALHADOS</a>
+                        <router-link class="home-detailed-link" :to="{name: 'landings'}">
+                            VER POUSOS DETALHADOS
+                        </router-link>
                     </span>
                     <br style="clear:both;">
                     <multi-line-chart
@@ -31,14 +30,6 @@
             <div class="home-white-box">
                 <h2>ABASTECIMENTO</h2>
                 <h3>Informações de abastecimento das aeronaves</h3>
-
-                <!--<div class="home-search-input-container">-->
-                    <!--<input type="text" placeholder="search input...">-->
-                    <!--<ul class="home-search-input-autocomplete">-->
-                        <!--<li>BZ1409</li>-->
-                    <!--</ul>-->
-                    <!--<i class="fa fa-search"></i>-->
-                <!--</div>-->
 
                 <div class="home-airplane-refuling" v-for="fueling in fueling.lasts">
                     <h3>{{ prefix(opt(fueling.prefixo, "")) }}</h3>
@@ -59,11 +50,12 @@
                 <h2>Indicadores</h2>
                 <h3>Histórico de alertas emitidos durante o período</h3>
                 <ul class="home-white-box-switch">
-                    <li class="active">Hoje</li>
-                    <li>Semana</li>
-                    <li>Mês</li>
+                    <li :class="{'active' : indicatorPeriod === 1}" @click="setIndicatorsPeriod(1)">Hoje</li>
+                    <li :class="{'active' : indicatorPeriod === 2}" @click="setIndicatorsPeriod(2)">Semana</li>
+                    <li :class="{'active' : indicatorPeriod === 3}" @click="setIndicatorsPeriod(3)">Mês</li>
                 </ul>
-                <doughnut-infographic :series="dseries"/>
+                <br style="clear: both;">
+                <doughnut-infographic :series="_indicators"/>
             </div>
             <div class="home-white-box">
                 <h2>Próximos vôos agendados</h2>
@@ -133,7 +125,7 @@
     import MultiLineChart from '../Components/Charts/MultiLineChart.vue';
     import DoughnutInfographic from '../Components/Charts/DoughnutInfographic.vue';
     import ProgressBar from '../Components/Charts/ProgressBar.vue';
-    import { prefix, opt } from '../utils';
+    import { prefix, opt, sumObjProperties } from '../utils';
 
     export default {
         name: "Home",
@@ -151,9 +143,33 @@
                 vm.fetchFueling()
                     .then(vm.setFuelingCharts)
 
+                vm.fetchIndicators()
+                    .then(vm.setIndicators)
+
             })
         },
         methods: {
+            generatePeriod() {
+                switch (this.indicatorPeriod) {
+                    case 1:
+                        return [moment().format("YYYY-MM-DD"), moment().format("YYYY-MM-DD")]
+                    case 2:
+                        return [moment().subtract(1, 'week').format("YYYY-MM-DD"), moment().format("YYYY-MM-DD")]
+                    case 3:
+                        return [moment().subtract(1, 'month').format("YYYY-MM-DD"), moment().format("YYYY-MM-DD")]
+                    default:
+                        return []
+                }
+            },
+            fetchIndicators() {
+                return this.$sdk.analytics.indicators(... this.generatePeriod())
+            },
+            setIndicators(res) {
+                this.indicators = res
+            },
+            setIndicatorsPeriod(n) {
+                this.indicatorPeriod = n
+            },
             opt,
             prefix,
             fetchFueling() {
@@ -163,7 +179,7 @@
                 this.fueling.lasts = res
             },
             fetchLandingsAndChecklists() {
-                return this.$sdk.analytics.landingsAndChecklists()
+                return this.$sdk.analytics.landingsAndChecklists(this.lec.day)
             },
             setLandingAndChecklists(res) {
                 this.lec.series = [
@@ -192,30 +208,42 @@
                     lasts: []
                 },
                 lec: {
-                    start: moment().format("YYYY-MM-DD"),
-                    end: moment().format("YYYY-MM-DD"),
+                    day: moment().format("YYYY-MM-DD"),
                     xAxis: ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23'].map(i => `${i} hrs`),
                     series: []
                 },
-                dseries: [
+                indicatorPeriod: 1,
+                indicators: {
+                    landings: 0,
+                    movements: 0,
+                    fuelling: 0,
+                    fake: 0,
+                }
+            }
+        },
+        computed: {
+            _indicators() {
+                const total = sumObjProperties(this.indicators)
+                const percent = (a, t) => Math.floor((a / t) * 100)
+                return [
                     {
                         name: 'Pouso',
-                        value: 50,
+                        value: percent(this.indicators.landings, total),
                         color: '#d4a628'
                     },
                     {
                         name: 'Movimentação',
-                        value: 50,
+                        value: percent(this.indicators.movements, total),
                         color: '#c3621f'
                     },
                     {
                         name: 'Abastecimento',
-                        value: 50,
+                        value: percent(this.indicators.fuelling, total),
                         color: '#303234'
                     },
                     {
                         name: 'Falso positivo',
-                        value: 50,
+                        value: percent(this.indicators.fake, total),
                         color: '#DD241A'
                     }
                 ]
@@ -223,6 +251,12 @@
         },
         mounted() {
             let self = this
+        },
+        watch: {
+            indicatorPeriod(_new) {
+                this.fetchIndicators()
+                    .then(this.setIndicators)
+            }
         }
     }
 </script>
@@ -282,6 +316,13 @@
         padding:0;
         display:block;
         float:left;
+        cursor: pointer;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
     }
 
     .home-white-box-switch > li.active {

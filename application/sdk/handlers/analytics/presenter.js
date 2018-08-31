@@ -22,6 +22,9 @@ const presenter = {
             })
 
         return result
+    },
+    indicators(res) {
+        return res.data
     }
 }
 

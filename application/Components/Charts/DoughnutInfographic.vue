@@ -15,7 +15,7 @@
                         formatter: function (e) {
                             if('name' in e && e.name === 'invisible')
                                 return;
-                            return `${e.marker} ${e.name}<br> ${e.data.value}`
+                            return `${e.marker} ${e.name}<br> ${e.data.value} %`
                         }
                     },
                     legend: {
