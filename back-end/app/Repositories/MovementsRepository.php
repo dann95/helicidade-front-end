@@ -3,10 +3,32 @@
 
 namespace Heliquality\Repositories;
 
+use Heliquality\Models\Ocorrencia;
 use Heliquality\Models\PreOcorrencia;
 
 class MovementsRepository
 {
+    public function find($id)
+    {
+        $res = Ocorrencia::where('id_evento', 4)
+            ->with(['checklist'])
+            ->where('id', $id)
+            ->get()
+            ->first();
+
+
+
+
+        if(! $res)
+            return ['found' => false];
+
+
+        return [
+            'found' => true,
+            'movement' => $res
+        ];
+    }
+
     public function all()
     {
         return PreOcorrencia::with(['ocorrencia'])

@@ -9,7 +9,6 @@ import meta from './metainfo';
 import uid from './uid';
 import bus from './bus';
 import socket from './socket';
-import socketDriver from './socket/drivers/pusher';
 
 /**
  * API endpoint replaced with .env var by Gulp
@@ -47,7 +46,7 @@ Vue.use(bus)
  * Socket
  */
 
-Vue.use(socket(socketDriver))
+Vue.use(socket())
 
 const router = new VueRouter({routes})
 meta(router)

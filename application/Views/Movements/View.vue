@@ -1,5 +1,5 @@
 <template>
-    <div class="row">
+    <div class="row" v-if="movement">
         <div class="col-lg-4">
             <div style="background-color:white; height: 170px;">
                 <h2>
@@ -17,7 +17,7 @@
                 </h2>
                 <ul>
                     <li>
-                        Rotor e Pás
+                        Rotor e Pás <checklist :state="false" />
                     </li>
                     <li>
                         Rotor de Cauda
@@ -47,8 +47,38 @@
 </template>
 
 <script>
+    import Checklist from '../../Components/Inputs/Checklist.vue';
+
     export default {
-        name: "Movements"
+        name: "Movements",
+        components: {
+            Checklist
+        },
+        data() {
+            return {
+                movement: false
+            }
+        },
+        methods: {
+            fetchMovement() {
+                return this.$sdk.movements.find(this.$route.params['id'])
+            },
+            setMovementOrRedirect(res) {
+
+                if(! res.found) {
+                    this.$router.push('/404')
+                    return;
+                }
+
+                this.movement = res.movement
+            }
+        },
+        beforeRouteEnter(to, from, next) {
+            next(vm => {
+                vm.fetchMovement()
+                    .then(vm.setMovementOrRedirect)
+            })
+        }
     }
 </script>
 

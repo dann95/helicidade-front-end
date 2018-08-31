@@ -127,6 +127,15 @@ $routes = function (\Slim\App $router) {
 
                 return $response;
             });
+
+            $router->get('/{id}', function (Request $request, Response $response, $args) {
+
+                $repository = new \Heliquality\Repositories\MovementsRepository();
+
+                $response->getBody()->write(json_encode($repository->find($args['id'])));
+
+                return $response;
+            });
         });
 
         $router->group('/landings', function () use ($router) {

@@ -1,7 +1,11 @@
 class Socket {
 
-    constructor(driver) {
-        this.driver = driver
+    constructor() {
+        this.connect()
+    }
+
+    connect() {
+        this.connection = ''
     }
 
 }
@@ -9,7 +13,7 @@ class Socket {
 
 const plugin = driver => {
 
-    let kernel = new Socket(driver)
+    let kernel = new Socket()
 
     return {
         install(_Vue, options) {

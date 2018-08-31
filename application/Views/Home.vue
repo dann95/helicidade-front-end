@@ -35,13 +35,15 @@
                     <h3>{{ prefix(opt(fueling.prefixo, "")) }}</h3>
 
                     <h4>
-                        Data do último abastecimento: {{ fueling.dt_registro.split('-').reverse().join('/')+' '+fueling.hr_registro }}
+                        Data abastecimento: {{ fueling.dt_registro.split('-').reverse().join('/')+' '+fueling.hr_registro }}
                     </h4>
 
-                    <progress-bar :percent="fueling.porcentagem_tanque_1"/>
-                    <progress-bar :percent="fueling.porcentagem_tanque_2"/>
+                    <span class="home-fueling-type">Tipo de combustível: <strong :class="{'fueling-color-jet1': fueling.combustivel == 2, 'fueling-color-avgas' : fueling.combustivel == 1}">{{(fueling.combustivel == 2) ? 'JET-A1' : 'AVGAS' }}</strong></span><br>
 
-                    <span class="home-fueling-type">Tipo de combustível: <strong :class="{'fueling-color-jet1': fueling.combustivel == 2, 'fueling-color-avgas' : fueling.combustivel == 1}">{{(fueling.combustivel == 2) ? 'JET-A1' : 'AVGAS' }}</strong></span>
+                    Quantidade: {{ fueling.litro }} litros<br>
+
+                    Peso do combustivel abastecido: {{ (fueling.combustivel === 1) ? avgas(fueling.litro) : jeta1(fueling.litro) }} KG<br>
+
                 </div>
             </div>
         </div>
@@ -58,7 +60,7 @@
                 <doughnut-infographic :series="_indicators"/>
             </div>
             <div class="home-white-box">
-                <h2>Próximos vôos agendados</h2>
+                <h2>Próximos voos agendados</h2>
                 <h3>Datas dos próximos vôos agendados.</h3>
 
                 <div id="home-calendar-month">
@@ -124,15 +126,15 @@
 
     import MultiLineChart from '../Components/Charts/MultiLineChart.vue';
     import DoughnutInfographic from '../Components/Charts/DoughnutInfographic.vue';
-    import ProgressBar from '../Components/Charts/ProgressBar.vue';
     import { prefix, opt, sumObjProperties } from '../utils';
+
+    import fuel from '../calcs/fuel';
 
     export default {
         name: "Home",
         components: {
             MultiLineChart,
-            DoughnutInfographic,
-            ProgressBar
+            DoughnutInfographic
         },
         beforeRouteEnter(to, from, next) {
             next(vm => {
@@ -149,6 +151,8 @@
             })
         },
         methods: {
+            avgas: fuel.density.avgas,
+            jeta1: fuel.density.jeta1,
             generatePeriod() {
                 switch (this.indicatorPeriod) {
                     case 1:
@@ -196,7 +200,6 @@
                     {
                         name: 'Checklists',
                         color: 'grey',
-                        type: 'dashed',
                         values: res.checklists
                     }
                 ]
